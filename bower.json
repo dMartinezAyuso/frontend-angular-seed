@@ -1,0 +1,23 @@
+{
+    "name": "frontend-angular-bootstrap-seed",
+    "description": "Seed for frontend app with AngularJS and Bootstrap. Also include Grunt, Dyson, JsHint, Karma and Protractor.",
+    "version": "0.0.1",
+    "license": "MIT",
+    "author": {
+        "name": "Diego M. Martínez Ayuso",
+        "mail": "diego.martinez.ayuso@gmail.com"
+    },
+    "repository": "https://github.com/dMartinezAyuso",
+    "private": true,
+    "dependencies": {
+        "angular": "1.2.x",
+        "angular-route": "1.2.x",
+        "angular-loader": "1.2.x",
+        "angular-mocks": "~1.2.x",
+        "angular-resource": "~1.2.18",
+        "angular-ui-router": "~0.2.10",
+        "html5-boilerplate": "~4.3.0",
+        "bootstrap-sass-official": "~3.2.0",
+        "jquery": "1.9.1"
+    }
+}
