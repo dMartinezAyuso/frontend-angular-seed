@@ -1,5 +1,7 @@
 #Frontend-Angular-Bootstrap-Seed
 
+Firstly, thanks to Angular-Seed and Peter Bacon.
+
 ##Previous requeriments (tested in Debian distributions)
 
 On your PC you must have installed: 
