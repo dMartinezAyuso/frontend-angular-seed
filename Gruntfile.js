@@ -7,11 +7,10 @@ var JSHINT_CONFIG_FILE_NAME = '.jshintrc';
 var NODE_CONFIG_FILE_NAME = 'package.json';
 
 var SRC_BASE_BUILD = 'build';
-var SRC_BASE_COMPASS_COMPONENTS = 'app/components/**/*.scss';
-var SRC_BASE_COMPASS_FOLDERS_COMPONENTS = 'app/components';
-var SRC_BASE_COMPASS_FOLDERS_CSS = 'app/assets/css';
-var SRC_BASE_COMPASS_FOLDERS_SCSS = 'app/assets/scss';
-var SRC_BASE_COMPASS_SCSS = 'app/assets/scss/**/*.scss';
+var SRC_BASE_SASS_COMPONENTS = 'app/components/**/*.scss';
+var SRC_BASE_SASS_FOLDERS_CSS = 'app/assets/css';
+var SRC_BASE_SASS_FOLDERS_SCSS = 'app/assets/scss';
+var SRC_BASE_SASS_SCSS = 'app/assets/scss/**/*.scss';
 var SRC_BASE_HTML_COMPONENTS_FILES = 'app/components/**/*.html';
 var SRC_BASE_HTML_INDEX_FILE = 'app/index.html';
 var SRC_BASE_HTML_VIEWS_FILES = 'app/views/**/*.html';
@@ -19,9 +18,6 @@ var SRC_BASE_JS_APP = 'app/app.js';
 var SRC_BASE_JS_COMPONENTS_FILES = 'app/components/**/*.js';
 var SRC_BASE_JS_MOCKSERVER_FILES = 'app/mock_server/**/*.js';
 var SRC_BASE_JS_VIEWS_FILES = 'app/views/**/*.js';
-var SRC_BASE_PROJECT = '/home/diego/Dev/frontend-angular-bootstrap-seed';
-var SRC_BASE_PROJECT_APP = '/home/diego/Dev/frontend-angular-bootstrap-seed/app';
-
 
 var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
@@ -34,8 +30,8 @@ module.exports = function(grunt) {
         compass: {
             dev: {
                 options: {
-                    sassDir:[SRC_BASE_COMPASS_FOLDERS_SCSS, SRC_BASE_COMPASS_FOLDERS_COMPONENTS],
-                    cssDir: SRC_BASE_COMPASS_FOLDERS_CSS,
+                    sassDir: SRC_BASE_SASS_FOLDERS_SCSS,
+                    cssDir: SRC_BASE_SASS_FOLDERS_CSS,
                     environment: 'development',
                     outputStyle: 'compressed',
                     noLineComments: true
@@ -43,8 +39,8 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    sassDir: [SRC_BASE_COMPASS_FOLDERS_SCSS, SRC_BASE_COMPASS_FOLDERS_COMPONENTS],
-                    cssDir: SRC_BASE_COMPASS_FOLDERS_CSS,
+                    sassDir: SRC_BASE_SASS_FOLDERS_SCSS,
+                    cssDir: SRC_BASE_SASS_FOLDERS_CSS,
                     environment: 'production',
                     outputStyle: 'compressed',
                     noLineComments: true
@@ -103,7 +99,7 @@ module.exports = function(grunt) {
         },
         watch: {
             compass: {
-                files: [SRC_BASE_COMPASS_SCSS, SRC_BASE_COMPASS_COMPONENTS],
+                files: [SRC_BASE_SASS_SCSS, SRC_BASE_SASS_COMPONENTS],
                 tasks: ['compass:dev'],
                 options: {
                     livereload: true
