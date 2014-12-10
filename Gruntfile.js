@@ -3,14 +3,15 @@ var SERVER_CONNECT_PORT = 9000;
 
 var SEPARATOR_TYPE = ';';
 
-var COMPASS_CONFIG_FILE_NAME = 'config.rb';
 var JSHINT_CONFIG_FILE_NAME = '.jshintrc';
 var NODE_CONFIG_FILE_NAME = 'package.json';
 
 var SRC_BASE_BUILD = 'build';
+var SRC_BASE_COMPASS_COMPONENTS = 'app/components/**/*.scss';
+var SRC_BASE_COMPASS_FOLDERS_COMPONENTS = 'app/components';
 var SRC_BASE_COMPASS_FOLDERS_CSS = 'app/assets/css';
-var SRC_BASE_COMPASS_SCSS = 'app/assets/scss/**/*.scss';
 var SRC_BASE_COMPASS_FOLDERS_SCSS = 'app/assets/scss';
+var SRC_BASE_COMPASS_SCSS = 'app/assets/scss/**/*.scss';
 var SRC_BASE_HTML_COMPONENTS_FILES = 'app/components/**/*.html';
 var SRC_BASE_HTML_INDEX_FILE = 'app/index.html';
 var SRC_BASE_HTML_VIEWS_FILES = 'app/views/**/*.html';
@@ -26,37 +27,41 @@ var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
-module.exports = function(grunt) {    
-    
+module.exports = function(grunt) {
+
     grunt.initConfig({
         pkg: grunt.file.readJSON(NODE_CONFIG_FILE_NAME),
         compass: {
             dev: {
                 options: {
-                    sassDir:SRC_BASE_COMPASS_FOLDERS_SCSS,
+                    sassDir:[SRC_BASE_COMPASS_FOLDERS_SCSS, SRC_BASE_COMPASS_FOLDERS_COMPONENTS],
                     cssDir: SRC_BASE_COMPASS_FOLDERS_CSS,
-                    environment: 'development'
+                    environment: 'development',
+                    outputStyle: 'compressed',
+                    noLineComments: true
                 }
             },
             prod: {
-                options: {              
-                    sassDir: SRC_BASE_COMPASS_FOLDERS_SCSS,
+                options: {
+                    sassDir: [SRC_BASE_COMPASS_FOLDERS_SCSS, SRC_BASE_COMPASS_FOLDERS_COMPONENTS],
                     cssDir: SRC_BASE_COMPASS_FOLDERS_CSS,
-                    environment: 'production'
+                    environment: 'production',
+                    outputStyle: 'compressed',
+                    noLineComments: true
                 }
             }
         },
         concat: {
-            options: { 
+            options: {
                 separator: SEPARATOR_TYPE
             },
             dist: {
-                src: [ 
-                    SRC_BASE_JS_VIEWS_FILES, 
+                src: [
+                    SRC_BASE_JS_VIEWS_FILES,
                     SRC_BASE_JS_COMPONENTS_FILES,
-                    SRC_BASE_JS_APP 
+                    SRC_BASE_JS_APP
                 ],
-                dest: SRC_BASE_BUILD.concat('/<%= pkg.name %>.js') 
+                dest: SRC_BASE_BUILD.concat('/<%= pkg.name %>.js')
             }
         },
         connect: {
@@ -78,27 +83,27 @@ module.exports = function(grunt) {
                 SRC_BASE_JS_APP,
                 SRC_BASE_JS_MOCKSERVER_FILES
             ]
-        },        
+        },
         open: {
             dev: {
                 path: 'http://localhost:<%= connect.server.options.port %>' //la direccion que abriremos
             }
         },
         uglify: {
-            options: { 
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n' 
+            options: {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
-            files: { 
+            files: {
                 'build/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']  // en este caso, coge el directorio de salida del task de concatenado y lo minifica cambiándole el nombre
-            } 
-            /*build: { 
-                src: 'src/<%= pkg.name %>.js', 
-                dest: 'build/<%= pkg.name %>.min.js' 
+            }
+            /*build: {
+                src: 'src/<%= pkg.name %>.js',
+                dest: 'build/<%= pkg.name %>.min.js'
             } */
         },
-        watch: {            
+        watch: {
             compass: {
-                files: [SRC_BASE_COMPASS_SCSS],
+                files: [SRC_BASE_COMPASS_SCSS, SRC_BASE_COMPASS_COMPONENTS],
                 tasks: ['compass:dev'],
                 options: {
                     livereload: true
@@ -134,7 +139,6 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('default', 'watch');
-    grunt.registerTask('server', ['compass:dev','jshint','open:dev','connect:server','watch'])
-    grunt.registerTask('build', ['jshint','concat','uglify'])
-
+    grunt.registerTask('server', ['compass:dev','jshint','open:dev','connect:server','watch']);
+    grunt.registerTask('build', ['jshint','concat','uglify']);
 };
