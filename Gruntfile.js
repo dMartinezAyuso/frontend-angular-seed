@@ -6,18 +6,31 @@ var SEPARATOR_TYPE = ';';
 var JSHINT_CONFIG_FILE_NAME = '.jshintrc';
 var NODE_CONFIG_FILE_NAME = 'package.json';
 
-var SRC_BASE_BUILD = 'build';
-var SRC_BASE_SASS_COMPONENTS = 'app/components/**/*.scss';
-var SRC_BASE_SASS_FOLDERS_CSS = 'app/assets/css';
-var SRC_BASE_SASS_FOLDERS_SCSS = 'app/assets/scss';
-var SRC_BASE_SASS_SCSS = 'app/assets/scss/**/*.scss';
-var SRC_BASE_HTML_COMPONENTS_FILES = 'app/components/**/*.html';
-var SRC_BASE_HTML_INDEX_FILE = 'app/index.html';
-var SRC_BASE_HTML_VIEWS_FILES = 'app/views/**/*.html';
-var SRC_BASE_JS_APP = 'app/app.js';
-var SRC_BASE_JS_COMPONENTS_FILES = 'app/components/**/*.js';
-var SRC_BASE_JS_MOCKSERVER_FILES = 'app/mock_server/**/*.js';
-var SRC_BASE_JS_VIEWS_FILES = 'app/views/**/*.js';
+var SRC_BUILD = 'build';
+var SRC_SASS_COMPONENTS = 'app/components/**/*.scss';
+var SRC_SASS_FOLDERS_CSS = 'app/assets/css';
+var SRC_SASS_FOLDERS_SCSS = 'app/assets/scss';
+var SRC_SASS_SCSS = 'app/assets/scss/**/*.scss';
+var SRC_HTML_COMPONENTS_FILES = 'app/components/**/*.html';
+var SRC_HTML_INDEX_FILE = 'app/index.html';
+var SRC_HTML_VIEWS_FILES = 'app/views/**/*.html';
+var SRC_JS_APP = 'app/app.js';
+var SRC_JS_BUILT_BUNDLE = 'app/bundles/built.js';
+var SRC_JS_COMPONENTS_FILES = 'app/components/**/*.js';
+var SRC_JS_MOCKSERVER_FILES = 'app/mock_server/**/*.js';
+var SRC_JS_VENDOR_ANGULAR = 'app/bower_components/angular/angular.js';
+var SRC_JS_VENDOR_ANGULAR_MIN = 'app/bower_components/angular/angular.min.js';
+var SRC_JS_VENDOR_ANGULAR_ROUTE = 'app/bower_components/angular-route/angular-route.js';
+var SRC_JS_VENDOR_ANGULAR_ROUTE_MIN = 'app/bower_components/angular-route/angular-route.min.js';
+var SRC_JS_VENDOR_BUNDLE = 'app/bundles/vendor.js';
+var SRC_JS_VENDOR_JQUERY = 'app/bower_components/jquery/dist/jquery.js';
+var SRC_JS_VENDOR_JQUERY_MIN = 'app/bower_components/jquery/dist/jquery.min.js';
+var SRC_JS_VENDOR_JQUERY_TRANSIT = 'app/bower_components/jquery.transit/jquery.transit.js';
+var SRC_JS_VENDOR_LUMX = 'app/bower_components/lumx/dist/js/lumx.js';
+var SRC_JS_VENDOR_LUMX_MIN = 'app/bower_components/lumx/dist/js/lumx.min.js';
+var SRC_JS_VENDOR_VELOCITY = 'app/bower_components/velocity/velocity.js';
+var SRC_JS_VENDOR_VELOCITY_MIN = 'app/bower_components/velocity/velocity.min.js';
+var SRC_JS_VIEWS_FILES = 'app/views/**/*.js';
 
 var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
@@ -30,8 +43,8 @@ module.exports = function(grunt) {
         compass: {
             dev: {
                 options: {
-                    sassDir: SRC_BASE_SASS_FOLDERS_SCSS,
-                    cssDir: SRC_BASE_SASS_FOLDERS_CSS,
+                    sassDir: SRC_SASS_FOLDERS_SCSS,
+                    cssDir: SRC_SASS_FOLDERS_CSS,
                     environment: 'development',
                     outputStyle: 'expanded',
                     noLineComments: true
@@ -39,8 +52,8 @@ module.exports = function(grunt) {
             },
             prod: {
                 options: {
-                    sassDir: SRC_BASE_SASS_FOLDERS_SCSS,
-                    cssDir: SRC_BASE_SASS_FOLDERS_CSS,
+                    sassDir: SRC_SASS_FOLDERS_SCSS,
+                    cssDir: SRC_SASS_FOLDERS_CSS,
                     environment: 'production',
                     outputStyle: 'compressed',
                     noLineComments: true
@@ -51,13 +64,43 @@ module.exports = function(grunt) {
             options: {
                 separator: SEPARATOR_TYPE
             },
-            dist: {
+            dev: {
                 src: [
-                    SRC_BASE_JS_VIEWS_FILES,
-                    SRC_BASE_JS_COMPONENTS_FILES,
-                    SRC_BASE_JS_APP
+                    SRC_JS_VIEWS_FILES,
+                    SRC_JS_COMPONENTS_FILES,
+                    SRC_JS_APP
                 ],
-                dest: SRC_BASE_BUILD.concat('/<%= pkg.name %>.js')
+                dest: SRC_JS_BUILT_BUNDLE
+            },
+            vendor: {
+                src: [
+                    SRC_JS_VENDOR_ANGULAR,
+                    SRC_JS_VENDOR_ANGULAR_ROUTE,
+                    SRC_JS_VENDOR_JQUERY,
+                    SRC_JS_VENDOR_JQUERY_TRANSIT,
+                    SRC_JS_VENDOR_LUMX,
+                    SRC_JS_VENDOR_VELOCITY
+                ],
+                dest: SRC_JS_VENDOR_BUNDLE
+            },
+            prod: {
+                src: [
+                    SRC_JS_VIEWS_FILES,
+                    SRC_JS_COMPONENTS_FILES,
+                    SRC_JS_APP
+                ],
+                dest: SRC_JS_BUILT_BUNDLE
+            },
+            vendor_prod: {
+                src: [
+                    SRC_JS_VENDOR_ANGULAR_MIN,
+                    SRC_JS_VENDOR_ANGULAR_ROUTE_MIN,
+                    SRC_JS_VENDOR_JQUERY_MIN,
+                    SRC_JS_VENDOR_JQUERY_TRANSIT,
+                    SRC_JS_VENDOR_LUMX_MIN,
+                    SRC_JS_VENDOR_VELOCITY_MIN
+                ],
+                dest: SRC_JS_VENDOR_BUNDLE
             }
         },
         connect: {
@@ -74,10 +117,10 @@ module.exports = function(grunt) {
                 jshintrc: JSHINT_CONFIG_FILE_NAME
             },
             all: [
-                SRC_BASE_JS_COMPONENTS_FILES,
-                SRC_BASE_JS_VIEWS_FILES,
-                SRC_BASE_JS_APP,
-                SRC_BASE_JS_MOCKSERVER_FILES
+                SRC_JS_COMPONENTS_FILES,
+                SRC_JS_VIEWS_FILES,
+                SRC_JS_APP,
+                SRC_JS_MOCKSERVER_FILES
             ]
         },
         open: {
@@ -90,7 +133,7 @@ module.exports = function(grunt) {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             files: {
-                'build/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']  // en este caso, coge el directorio de salida del task de concatenado y lo minifica cambiándole el nombre
+                'build/<%= pkg.name %>.min.js': ['<%= concat.prod.dest %>','<%= concat.vendor_prod.dest %>']
             }
             /*build: {
                 src: 'src/<%= pkg.name %>.js',
@@ -99,24 +142,25 @@ module.exports = function(grunt) {
         },
         watch: {
             compass: {
-                files: [SRC_BASE_SASS_SCSS, SRC_BASE_SASS_COMPONENTS],
+                files: [SRC_SASS_SCSS, SRC_SASS_COMPONENTS],
                 tasks: ['compass:dev'],
                 options: {
                     livereload: true
                 }
             },
             html: {
-                files: [SRC_BASE_HTML_INDEX_FILE, SRC_BASE_HTML_VIEWS_FILES, SRC_BASE_HTML_COMPONENTS_FILES],
+                files: [SRC_HTML_INDEX_FILE, SRC_HTML_VIEWS_FILES, SRC_HTML_COMPONENTS_FILES],
                 options: {
                     livereload: true
                 }
             },
             js: {
                 files: [
-                    SRC_BASE_JS_VIEWS_FILES,
-                    SRC_BASE_JS_COMPONENTS_FILES
+                    SRC_JS_APP,
+                    SRC_JS_COMPONENTS_FILES,
+                    SRC_JS_VIEWS_FILES
                 ],
-                tasks: ['uglify'],
+                tasks: ['concat:dev'], /*'uglify'*/
                 options: {
                     livereload: true
                 }
@@ -135,6 +179,7 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('default', 'watch');
-    grunt.registerTask('server', ['compass:dev','jshint','open:dev','connect:server','watch']);
-    grunt.registerTask('build', ['jshint','concat','uglify']);
+    grunt.registerTask('server', ['jshint','compass:dev','concat:vendor','concat:dev','open:dev','connect:server','watch']);
+    grunt.registerTask('hint', 'jshint');
+    grunt.registerTask('build', ['jshint','concat:vendor_prod','concat:prod','uglify']);
 };
