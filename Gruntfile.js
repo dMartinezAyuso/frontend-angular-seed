@@ -40,6 +40,13 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON(NODE_CONFIG_FILE_NAME),
+        concurrent: {
+            tasks: ['shell', 'watch'],
+            options: {
+                limit: 5,
+                logConcurrentOutput: true
+            }
+        },
         compass: {
             dev: {
                 options: {
@@ -128,6 +135,14 @@ module.exports = function(grunt) {
                 path: 'http://localhost:<%= connect.server.options.port %>' //la direccion que abriremos
             }
         },
+        shell: {
+            options: {
+                stderr: false
+            },
+            target: {
+                command: 'dyson mock_server'
+            }
+        },
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -169,6 +184,7 @@ module.exports = function(grunt) {
     });
 
     // Load the plugin that provides the tasks.
+    grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
@@ -176,10 +192,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-shell');
 
     // Default task(s).
     grunt.registerTask('default', 'watch');
-    grunt.registerTask('server', ['jshint','compass:dev','concat:vendor','concat:dev','open:dev','connect:server','watch']);
+    grunt.registerTask('server', ['jshint','compass:dev','concat:vendor','concat:dev','open:dev','connect:server','concurrent']);
     grunt.registerTask('hint', 'jshint');
     grunt.registerTask('build', ['jshint','concat:vendor_prod','concat:prod','uglify']);
 };

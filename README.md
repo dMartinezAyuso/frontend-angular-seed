@@ -61,6 +61,14 @@ Concatenate and minify multiples JavaScript files.
 
 ---
 
+###Concurrent
+
+https://github.com/sindresorhus/grunt-concurrent
+
+Run grunt tasks concurrently
+
+---
+
 ###Connect & Open
 
 https://github.com/gruntjs/grunt-contrib-connect
@@ -85,6 +93,14 @@ https://github.com/gruntjs/grunt-contrib-compass
 Compile Sass to CSS using Compass.
 
 This task requires you to have *Ruby*, *Sass*, and *Compass* installed. Test with **ruby -v** in your terminal. When you've confirmed you have Ruby installed, run **gem update --system && gem install compass** to install Compass and Sass.
+
+---
+
+###Shell
+
+https://github.com/sindresorhus/grunt-shell
+
+Run shell commands
 
 ---
 
