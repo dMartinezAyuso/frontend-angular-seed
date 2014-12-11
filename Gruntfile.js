@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                     sassDir: SRC_BASE_SASS_FOLDERS_SCSS,
                     cssDir: SRC_BASE_SASS_FOLDERS_CSS,
                     environment: 'development',
-                    outputStyle: 'compressed',
+                    outputStyle: 'expanded',
                     noLineComments: true
                 }
             },

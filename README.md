@@ -1,10 +1,12 @@
-#Frontend-Angular-Bootstrap-Seed
+#Frontend-Angular-Lumx-Seed
 
-Firstly, thanks to Angular-Seed and Peter Bacon.
+Firstly, thanks to Angular-Seed and Peter Bacon for your good work.
+
+
 
 ##Previous requeriments (tested in Debian distributions)
 
-On your PC you must have installed: 
+###On your PC you must have installed: 
 	
 - *git*
 - *nodejs(npm)*
@@ -12,18 +14,35 @@ On your PC you must have installed:
 - *compass & sass*
 - *grunt-cli*
 
+###Grunt
+
+---
+
+###Bower
+
+---
+
+###AngularJS
+
+---
+
+###Lumx
+
+---
+
+
 
 ##Installation
 
 Once downloaded the project and have executed **git clone** on our pc, run  **npm install** and **bower install** to install all the needed packages (maybe have to do with *sudo*).
 
-Una vez descargado el proyecto y de hacer **git clone** en nuestro equipo, hacer **npm install** y **bower install** para la instalación de todos los paquetes necesarios ( a lo mejor tienes que hacerlo con *sudo*).
-
 ##Use (in progress)
 
 ###Concat
 
-info about Concat
+https://github.com/gruntjs/grunt-contrib-concat
+
+Concatenate and minify multiples JavaScript files.
 
 ---
 
