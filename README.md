@@ -1,9 +1,5 @@
 #Frontend-Angular-Lumx-Seed
 
-Firstly, thanks to Angular-Seed and Peter Bacon for your good work.
-
-
-
 ##Previous requeriments (tested in Debian distributions)
 
 ###On your PC you must have installed: 

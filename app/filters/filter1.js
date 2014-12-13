@@ -1,0 +1,2 @@
+//filter example
+'use strict';

@@ -17,6 +17,7 @@ var SRC_HTML_VIEWS_FILES = 'app/views/**/*.html';
 var SRC_JS_APP = 'app/app.js';
 var SRC_JS_BUILT_BUNDLE = 'app/bundles/built.js';
 var SRC_JS_COMPONENTS_FILES = 'app/components/**/*.js';
+var SRC_JS_FILTERS_FILES = 'app/filters/**/*.js';
 var SRC_JS_MOCKSERVER_FILES = 'app/mock_server/**/*.js';
 var SRC_JS_VENDOR_ANGULAR = 'app/bower_components/angular/angular.js';
 var SRC_JS_VENDOR_ANGULAR_MIN = 'app/bower_components/angular/angular.min.js';
@@ -73,9 +74,10 @@ module.exports = function(grunt) {
             },
             dev: {
                 src: [
-                    SRC_JS_VIEWS_FILES,
+                    SRC_JS_APP,
                     SRC_JS_COMPONENTS_FILES,
-                    SRC_JS_APP
+                    SRC_JS_FILTERS_FILES,
+                    SRC_JS_VIEWS_FILES
                 ],
                 dest: SRC_JS_BUILT_BUNDLE
             },
@@ -92,9 +94,10 @@ module.exports = function(grunt) {
             },
             prod: {
                 src: [
-                    SRC_JS_VIEWS_FILES,
+                    SRC_JS_APP,
                     SRC_JS_COMPONENTS_FILES,
-                    SRC_JS_APP
+                    SRC_JS_FILTERS_FILES,
+                    SRC_JS_VIEWS_FILES
                 ],
                 dest: SRC_JS_BUILT_BUNDLE
             },
@@ -117,6 +120,11 @@ module.exports = function(grunt) {
                     base: 'app',
                     port: 9000
                 }
+            },
+            test_server: {
+                options: {
+                    port: 9001
+                }
             }
         },
         jshint: {
@@ -124,16 +132,34 @@ module.exports = function(grunt) {
                 jshintrc: JSHINT_CONFIG_FILE_NAME
             },
             all: [
-                SRC_JS_COMPONENTS_FILES,
-                SRC_JS_VIEWS_FILES,
                 SRC_JS_APP,
-                SRC_JS_MOCKSERVER_FILES
+                SRC_JS_COMPONENTS_FILES,
+                SRC_JS_FILTERS_FILES,
+                SRC_JS_MOCKSERVER_FILES,
+                SRC_JS_VIEWS_FILES
             ]
+        },
+        karma: {
+            unit: {
+                configFile: 'test/karma.conf.js',
+                autoWatch: false,
+                singleRun: true
+            },
+            unit_auto: {
+                configFile: 'test/karma-unit.conf.js'
+            }
         },
         open: {
             dev: {
                 path: 'http://localhost:<%= connect.server.options.port %>' //la direccion que abriremos
             }
+        },
+        protractor: {
+            options: {
+                keepAlive: true,
+                configFile: 'test/protractor.conf.js'
+            },
+            singlerun: {}
         },
         shell: {
             options: {
@@ -154,7 +180,7 @@ module.exports = function(grunt) {
                 src: 'src/<%= pkg.name %>.js',
                 dest: 'build/<%= pkg.name %>.min.js'
             } */
-        },
+        },        
         watch: {
             compass: {
                 files: [SRC_SASS_SCSS, SRC_SASS_COMPONENTS],
@@ -173,6 +199,7 @@ module.exports = function(grunt) {
                 files: [
                     SRC_JS_APP,
                     SRC_JS_COMPONENTS_FILES,
+                    SRC_JS_FILTERS_FILES,
                     SRC_JS_VIEWS_FILES
                 ],
                 tasks: ['concat:dev'], /*'uglify'*/
@@ -191,12 +218,17 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-shell');
 
-    // Default task(s).
+    // Tasks.
     grunt.registerTask('default', 'watch');
     grunt.registerTask('server', ['jshint','compass:dev','concat:vendor','concat:dev','open:dev','connect:server','concurrent']);
     grunt.registerTask('hint', 'jshint');
     grunt.registerTask('build', ['jshint','concat:vendor_prod','concat:prod','uglify']);
+    grunt.registerTask('full-test', ['unit', 'e2e']);
+    grunt.registerTask('unit', ['karma:unit']);
+    grunt.registerTask('e2e', ['connect:test_server','protractor:singlerun']);
 };
