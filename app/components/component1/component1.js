@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.component1',[])
+angular.module('myApp.components',[])
 
 .directive('myComponent1', function() {
     return {
