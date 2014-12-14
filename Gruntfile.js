@@ -19,6 +19,8 @@ var SRC_JS_BUILT_BUNDLE = 'app/bundles/built.js';
 var SRC_JS_COMPONENTS_FILES = 'app/components/**/*.js';
 var SRC_JS_FILTERS_FILES = 'app/filters/**/*.js';
 var SRC_JS_MOCKSERVER_FILES = 'app/mock_server/**/*.js';
+var SRC_JS_MODULES = 'app/modules.js';
+var SRC_JS_ROUTES = 'app/routes.js';
 var SRC_JS_VENDOR_ANGULAR = 'app/bower_components/angular/angular.js';
 var SRC_JS_VENDOR_ANGULAR_MIN = 'app/bower_components/angular/angular.min.js';
 var SRC_JS_VENDOR_ANGULAR_ROUTE = 'app/bower_components/angular-route/angular-route.js';
@@ -75,6 +77,8 @@ module.exports = function(grunt) {
             dev: {
                 src: [
                     SRC_JS_APP,
+                    SRC_JS_MODULES,
+                    SRC_JS_ROUTES,
                     SRC_JS_COMPONENTS_FILES,
                     SRC_JS_FILTERS_FILES,
                     SRC_JS_VIEWS_FILES
@@ -95,6 +99,8 @@ module.exports = function(grunt) {
             prod: {
                 src: [
                     SRC_JS_APP,
+                    SRC_JS_MODULES,
+                    SRC_JS_ROUTES,
                     SRC_JS_COMPONENTS_FILES,
                     SRC_JS_FILTERS_FILES,
                     SRC_JS_VIEWS_FILES
@@ -133,6 +139,8 @@ module.exports = function(grunt) {
             },
             all: [
                 SRC_JS_APP,
+                SRC_JS_MODULES,
+                SRC_JS_ROUTES,
                 SRC_JS_COMPONENTS_FILES,
                 SRC_JS_FILTERS_FILES,
                 SRC_JS_MOCKSERVER_FILES,
@@ -198,6 +206,8 @@ module.exports = function(grunt) {
             js: {
                 files: [
                     SRC_JS_APP,
+                    SRC_JS_MODULES,
+                    SRC_JS_ROUTES,
                     SRC_JS_COMPONENTS_FILES,
                     SRC_JS_FILTERS_FILES,
                     SRC_JS_VIEWS_FILES
@@ -225,7 +235,8 @@ module.exports = function(grunt) {
 
     // Tasks.
     grunt.registerTask('default', 'watch');
-    grunt.registerTask('server', ['jshint','compass:dev','concat:vendor','concat:dev','open:dev','connect:server','concurrent']);
+    /*grunt.registerTask('server', ['jshint','concat:vendor','concat:dev','compass:dev','open:dev','connect:server','concurrent']);    */
+    grunt.registerTask('server', ['jshint','concat:vendor','concat:dev','compass:dev','open:dev','connect:server','watch']);    
     grunt.registerTask('hint', 'jshint');
     grunt.registerTask('build', ['jshint','concat:vendor_prod','concat:prod','uglify']);
     grunt.registerTask('full-test', ['unit', 'e2e']);

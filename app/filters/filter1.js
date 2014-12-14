@@ -1,7 +1,12 @@
 'use strict';
 
-angular.module('myApp.filters',[])
+(function() {
 
-.filter('myFilter1', function() {
-    return '';
-});
+	function myFilter1() {
+		
+	}
+
+	angular.module('myApp.filters.myFilter1')
+		.filter('myFilter1', myFilter1);	
+})();
+
