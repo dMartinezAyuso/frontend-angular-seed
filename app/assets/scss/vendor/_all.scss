@@ -1,1 +1,7 @@
 @import "vendor/vendor";
+
+/*Lumx*/
+@import "vendor/settings.common";
+@import "../../bower_components/lumx/dist/scss/main/lumx";
+@import "../../bower_components/lumx/dist/scss/core/settings/settings.responsive.scss";
+@import "../../bower_components/lumx/dist/scss/core/settings/settings.colors.scss";

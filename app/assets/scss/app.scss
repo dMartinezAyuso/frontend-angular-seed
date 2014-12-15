@@ -11,6 +11,8 @@
  * Coding rules : https://github.com/necolas/idiomatic-css
  *
  */
+/*Vendor*/
+@import "vendor/all";
 
 /*Base*/
 @import "base/all";
@@ -27,8 +29,6 @@
 /*Objects*/
 @import "objects/all";
 
-/*Vendor*/
-@import "vendor/all";
 
 /*Components*/
 @import "../../components/component1/component1";

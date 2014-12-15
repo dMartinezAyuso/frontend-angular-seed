@@ -4,5 +4,9 @@ app/bower_components/
 .sass-cache/
 build/
 app/bundles/
+app/assets/css/
+test/unit-results/coverage/	
+test/unit-results/html/
+test/unit-results/xml/
 test/unit-results/	
 test/selenium/

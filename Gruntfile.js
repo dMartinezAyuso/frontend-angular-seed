@@ -236,7 +236,7 @@ module.exports = function(grunt) {
     // Tasks.
     grunt.registerTask('default', 'watch');
     /*grunt.registerTask('server', ['jshint','concat:vendor','concat:dev','compass:dev','open:dev','connect:server','concurrent']);    */
-    grunt.registerTask('server', ['jshint','concat:vendor','concat:dev','compass:dev','open:dev','connect:server','watch']);    
+    grunt.registerTask('server', ['jshint','compass:dev','concat:vendor','concat:dev','open:dev','connect:server','watch']);    
     grunt.registerTask('hint', 'jshint');
     grunt.registerTask('build', ['jshint','concat:vendor_prod','concat:prod','uglify']);
     grunt.registerTask('full-test', ['unit', 'e2e']);
